@@ -1,0 +1,32 @@
+{
+  "name": "angular-theme",
+  "version": "1.0.1",
+  "authors": [
+    "Pea <pea@misfist.com>"
+  ],
+  "description": "Wordpress theme built with Angularjs and Rest API.",
+  "main": "index.php",
+  "keywords": [
+    "Wordpress",
+    "Angularjs",
+    "theme",
+    "Rest",
+    "API"
+  ],
+  "license": "GPLv3",
+  "homepage": "https://github.com/misfist/wp-angular-theme",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.4.5",
+    "angular-sanitize": "~1.4.5",
+    "angular": "~1.4.5"
+  }
+}

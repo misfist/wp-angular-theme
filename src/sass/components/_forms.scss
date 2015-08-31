@@ -1,0 +1,13 @@
+
+form {
+	.ng-invalid.ng-dirty {
+		background-color: lighten( red, 80% );
+		border-color: red;
+	}
+
+	.ng-valid.ng-dirty {
+		background-color: lighten( green, 80% );
+		border-color: green;
+	}	
+}
+

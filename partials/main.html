@@ -1,0 +1,9 @@
+<ul class="post-list">
+    <li class="post" ng-repeat="post in posts">
+        <header class="post-header">
+            <h3 class="post-title"><a href="{{post.id}}">{{post.title.rendered}}</a></h3>
+        </header>
+        <div class="post-content">{{post.excerpt.rendered}}</div>
+        <footer class="post-footer"></footer>
+    </li>
+</ul>
