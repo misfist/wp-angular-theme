@@ -1,4 +1,15 @@
+// If there is an admin bar push the nav down
+.admin-bar {
+    .navbar-fixed-top {
+        top: 30px;
+    }
+}
+
 .list-group {
 	width: 70%;
 	margin: 0 auto;
+}
+
+main {
+    @extend %clearfix;
 }

@@ -2,6 +2,8 @@
 @import "vendor/bootstrap/bootstrap";
 
 /* Util */
+@import 'util/variables';
+@import 'util/mixins';
 
 /* Layout */
 @import 'layout/layout';
@@ -13,3 +15,6 @@
 @import 'components/forms';
 
 /* Theme */
+@import 'theme/colors';
+@import 'theme/typography';
+@import 'theme/blog';

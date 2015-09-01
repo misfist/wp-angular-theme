@@ -1,6 +1,8 @@
+<h2>About</h2>
+
 <article id="post-{{post.id}}" class="post" role="article">
     <header class="post-header">
-        <h3 class="post-title"><a href="{{post.id}}">{{post.title.rendered}}</a></h3>
+        <h1 class="post-title" ng-bind-html="page.title.rendered"></h1>
     </header>
     <div class="post-content" ng-bind-html="post.content.rendered"></div>
     <footer class="post-footer"></footer>
