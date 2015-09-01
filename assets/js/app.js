@@ -55,9 +55,12 @@ app.config( function( $routeProvider, $locationProvider ) {
  * Controllers
  */
 
-app.controller( 'Main', function( $scope, $http, $routeParams ) {
+app.controller('Main', ['$scope', '$http', 'WPService', function($scope, $http, WPService) {
 
     console.log( 'Main loaded' );
+
+    WPService.getAllCategories();
+    $scope.data = WPService;
 
     $scope.posts = [];
 
@@ -80,34 +83,7 @@ app.controller( 'Main', function( $scope, $http, $routeParams ) {
         $scope.totalPages = headers( 'X-WP-TotalPages' );
 
         console.log( 'posts', posts ); 
-        //console.log( 'status', status ); 
-        //console.log( 'headers', $scope.totalPages ); 
 
-        // for( var i = 0; i < posts.length; i++ ) {
-
-        //     if( posts[i].featured_image ) {
-
-        //         $http.get( 'wp-json/wp/v2/posts/' + posts[i].id )
-        //         .success( function( post ) {
-
-        //             $scope.post = post;
-
-        //             console.log( 'post', post ); 
-
-        //             $http.get( 'wp-json/wp/v2/media/' + post.featured_image )
-        //             .success( function( image ) {
-
-        //                 $scope.post.image = image;
-
-        //                 console.log('image', image);
-
-        //             });
-
-        //         } );                
-
-        //     }
-
-        // }
 
     } );
 
@@ -119,51 +95,15 @@ app.controller( 'Main', function( $scope, $http, $routeParams ) {
 
     } );
 
+}] );
 
-} );
-
-app.controller( 'Page', function( $scope, $http, $routeParams ) {
-
-    console.log( 'Page is loaded.' );
-
-    $http.get( 'wp-json/wp/v2/pages/?filter[name]=about' )
-    .success( function( page ) {
-
-        $scope.post = page[0];
-
-    } );
-
-} );
-
-app.controller( 'Post', function( $scope, $http, $routeParams ) {
-
-    console.log( 'Post is loaded.' );
-
-    $http.get( 'wp-json/wp/v2/posts/?filter[name]=' + $routeParams.slug )
-    .success( function( post ) {
-
-        $scope.post = post[0];
-
-        if( $scope.post.featured_image > 0 ) {
-
-            $http.get( 'wp-json/wp/v2/media/' + $scope.post.featured_image )
-            .success( function( image ) {
-
-                $scope.post.image = image;
-
-                console.log('image', image);
-
-            });
-
-        }
-
-    } );
-
-} );
-
-app.controller( 'Category', function( $scope, $http, $routeParams ) {
+// Category
+app.controller( 'Category', ['$scope', '$http', '$routeParams', 'WPService', function( $scope, $http, $routeParams, WPService ) {
 
     console.log( 'Category is loaded.' );
+
+    WPService.getAllCategories();
+    $scope.data = WPService;
 
     // Get categories
     $http.get( 'wp-json/wp/v2/terms/category/' )
@@ -201,11 +141,15 @@ app.controller( 'Category', function( $scope, $http, $routeParams ) {
 
     } );
 
-} );
+}] );
 
-app.controller( 'Paged', function( $scope, $http, $routeParams ) {
+// Paged
+app.controller( 'Paged', ['$scope', '$http', '$routeParams', 'WPService', function( $scope, $http, $routeParams ) {
 
     console.log( 'Paged is loaded.' );
+
+    WPService.getAllCategories();
+    $scope.data = WPService;
 
     // Get categories
     $http.get( 'wp-json/wp/v2/terms/category/' )
@@ -226,6 +170,50 @@ app.controller( 'Paged', function( $scope, $http, $routeParams ) {
         $scope.posts = posts;
         $scope.pageTitle = 'Posts on page ' + $scope.currentPage;
         console.log( 'posts', posts ); 
+
+    } );
+
+}] );
+
+
+
+
+// Single Page
+app.controller( 'Page', function( $scope, $http, $routeParams ) {
+
+    console.log( 'Page is loaded.' );
+
+    $http.get( 'wp-json/wp/v2/pages/?filter[name]=about' )
+    .success( function( page ) {
+
+        $scope.post = page[0];
+
+    } );
+
+} );
+
+// Single Post
+app.controller( 'Post', function( $scope, $http, $routeParams ) {
+
+    console.log( 'Post is loaded.' );
+
+    $http.get( 'wp-json/wp/v2/posts/?filter[name]=' + $routeParams.slug )
+    .success( function( post ) {
+
+        $scope.post = post[0];
+
+        if( $scope.post.featured_image > 0 ) {
+
+            $http.get( 'wp-json/wp/v2/media/' + $scope.post.featured_image )
+            .success( function( image ) {
+
+                $scope.post.image = image;
+
+                console.log('image', image);
+
+            });
+
+        }
 
     } );
 
