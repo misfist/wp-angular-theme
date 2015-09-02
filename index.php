@@ -17,6 +17,7 @@
             <div class="container">
 
                 <header class="blog-header">
+
                     <h1 class="blog-title">Angular Theme</h1>
                     <p class="lead blog-description">Wordpress theme built with Angularjs and Rest API.</p>
                 </header>
@@ -32,14 +33,16 @@
                     </aside>
                     
                 </main>
-
-                <footer class="footer">
-                    <span class="rotate">&copy;</span> <?php echo date( 'Y' ); ?>
-                </footer>
-
-                <?php wp_footer(); ?>
                 
             </div>
+
+            <footer id="footer" class="footer">
+                <div class="container">
+                    <span class="rotate">&copy;</span> <?php echo date( 'Y' ); ?>
+                </div>
+            </footer>
+
+            <?php wp_footer(); ?>
             
         </div>
 

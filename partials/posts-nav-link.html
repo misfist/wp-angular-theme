@@ -1,6 +1,7 @@
 <nav class="pager">
     <ul class="post-nav-link">
-        <li ng-if="currentPage > 1"><a href="{{postsNavLink.prevLink}}" class="prev-link">{{postsNavLink.prevLabel}}</a></li>
-        <li ng-if="currentPage < totalPages"><a href="{{postsNavLink.nextLink}}" class="next-link">{{postsNavLink.nextLabel}}</a></li>
+        {{data.currentPage}}
+        <li ng-if="data.currentPage > 1"><a href="{{postsNavLink.prevLink}}" class="prev-link">{{postsNavLink.prevLabel}}</a></li>
+        <li ng-if="data.currentPage < totalPages"><a href="{{postsNavLink.nextLink}}" class="next-link">{{postsNavLink.nextLabel}}</a></li>
     </ul>    
 </nav>

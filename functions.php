@@ -18,6 +18,8 @@ function angular_theme_scripts() {
 
     wp_enqueue_script( 'angularjs-wpservice', get_stylesheet_directory_uri() . '/assets/js/WPService.js', '', '', true );
 
+    wp_enqueue_script( 'jquery' );
+
     wp_enqueue_script( 'custom-scripts', get_stylesheet_directory_uri() . '/assets/js/custom-scripts.js', '', '', true );
 
     wp_localize_script( 'theme-scripts', 'ngThemeViews', 
@@ -30,7 +32,6 @@ function angular_theme_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'angular_theme_scripts' );
-
 
 /**
  * Body Class - add slug and admin-bar to body class
@@ -47,6 +48,7 @@ function pea_body_class_names(  ) {
         array_push($classes, "admin-bar");
 
     }
+
     return $classes;
 }
 

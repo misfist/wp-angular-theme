@@ -1,10 +1,11 @@
 jQuery(document).ready( function( $ ) {
 
     // Add wp-admin-bar class to body
-    if( $( '#wpadminbar' ) ) {
-        console.log('wpadminbar exists');
-        $( 'body' ).addClass('admin-bar')
-    }
+    // Not needed because adding body class via functions.php
+    // if( $( '#wpadminbar' ) ) {
+    //     console.log('wpadminbar exists');
+    //     $( 'body' ).addClass('admin-bar')
+    // }
 
 });
 

@@ -55,45 +55,15 @@ app.config( function( $routeProvider, $locationProvider ) {
  * Controllers
  */
 
-app.controller('Main', ['$scope', '$http', 'WPService', function($scope, $http, WPService) {
+app.controller('Main', ['$scope', 'WPService', function($scope, WPService) {
 
     console.log( 'Main loaded' );
 
     WPService.getAllCategories();
+    WPService.getPosts( 1 );
     $scope.data = WPService;
 
-    $scope.posts = [];
-
-    // Fetch site info
-    $http.get( 'wp-json/' )
-    .success( function( site ) {
-
-        $scope.site = site;
-        
-    } );
-
-    // Fetch posts
-    $http.get( 'wp-json/wp/v2/posts/' )
-    .success( function( posts, status, headers ) {
-
-        $scope.posts = posts;
-        $scope.pageTitle = 'Latest Posts';
-
-        $scope.currentPage = 1;
-        $scope.totalPages = headers( 'X-WP-TotalPages' );
-
-        console.log( 'posts', posts ); 
-
-
-    } );
-
-    // Fetch categories
-    $http.get( 'wp-json/wp/v2/terms/category/' )
-    .success( function( categories ) {
-
-        $scope.categories = categories;
-
-    } );
+    console.log( $scope.data ); 
 
 }] );
 
