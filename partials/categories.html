@@ -1,0 +1,6 @@
+<ul class="category-list list-unstyled">
+    <li class="term" ng-repeat="category in data.categories">
+        <span ng-if="currentCategoryId == category.id" ng-bind-html="category.name"></span>
+        <a ng-if="currentCategoryId != category.id" href="category/{{category.id}}" ng-bind-html="category.name"></a>
+    </li>
+</ul>

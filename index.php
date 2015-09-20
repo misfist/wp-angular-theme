@@ -22,17 +22,7 @@
                     <p class="lead blog-description">Wordpress theme built with Angularjs and Rest API.</p>
                 </header>
 
-                <main>
-                    
-                    <div class="col-lg-8">
-                        <div ng-view></div>
-                    </div>
-
-                    <aside class="col-lg-4">
-                        <sidebar></sidebar>
-                    </aside>
-                    
-                </main>
+                <main ng-view>Welcome</main>
                 
             </div>
 

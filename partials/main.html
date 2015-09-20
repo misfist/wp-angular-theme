@@ -1,27 +1,21 @@
-<search-form></search-form>
+<div class="col-lg-8">
 
-{{filter.s}}
+    <h1 class="page-title">{{data.pageTitle}}</h1>
 
-<ul class="category-list">
-    <li class="term" ng-repeat="category in data.categories">
-        <span ng-if="currentCategoryId == category.id" ng-bind-html="category.name"></span>
-        <a ng-if="currentCategoryId != category.id" href="category/{{category.id}}" ng-bind-html="category.name"></a>
-    </li>
-</ul>
+    <ul class="post-list list-unstyled">
+        <li class="post" ng-repeat="post in data.posts | filter:filter.s">
+            <header class="post-header">
+                <h3 class="post-title"><a href="{{post.slug}}" ng-bind-html="post.title.rendered"></a></h3>
+                <div ng-if="post.featured_image_thumbnail_url" class="post-image thumb"><a href="{{post.slug}}"><img src="" ng-src="{{post.featured_image_thumbnail_url}}" alt="{{post.featured_image_thumbnail_title}}" class="thumbnail img-responsive"></a></div>
+            </header>
+            <div class="post-content" ng-bind-html="post.excerpt.rendered"></div>
+            <footer class="post-footer"><a href="{{post.slug}}" class="btn">Read More &raquo;</a></footer>
+        </li>
+    </ul>
 
-<h1 class="page-title">{{data.pageTitle}}</h1>
+    <posts-nav-link prev-label="&laquo; Previous Page" next-label="Next Page &raquo;"></posts-nav-link>
+</div>
 
-<ul class="post-list">
-    <li class="post" ng-repeat="post in data.posts | filter:filter.s">
-        <header class="post-header">
-            <h3 class="post-title"><a href="{{post.slug}}" ng-bind-html="post.title.rendered"></a></h3>
-            Image: {{post.featured_image}}
-            <div class="post-image thumb"><img src="" ng-src="{{post.image.source_url}}" alt="{{post.image.title.rendered}}"></div>
-        </header>
-        <div class="post-content" ng-bind-html="post.excerpt.rendered"></div>
-        <footer class="post-footer"></footer>
-    </li>
-</ul>
-
-<posts-nav-link prev-label="&laquo; Previous Page" next-label="Next Page &raquo;"></posts-nav-link>
-
+<aside class="col-lg-4">
+    <sidebar></sidebar>
+</aside>

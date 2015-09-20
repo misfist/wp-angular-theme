@@ -5847,11 +5847,12 @@ button.close {
     bottom: 20px; } }
 
 .clearfix:before,
-.clearfix:after {
+li.post:before,
+.clearfix:after, li.post:after {
   content: " ";
   display: table; }
 
-.clearfix:after {
+.clearfix:after, li.post:after {
   clear: both; }
 
 .center-block {
@@ -6061,7 +6062,7 @@ button.close {
     display: none !important; } }
 
 /* Util */
-.clearfix:after {
+.clearfix:after, li.post:after {
   content: "";
   display: table;
   clear: both; }
@@ -6099,9 +6100,11 @@ body {
 
 /* Modules */
 /* Components */
-.thumbnail img {
-  width: 100px;
-  height: auto; }
+.thumbnail {
+  width: 25%;
+  height: auto;
+  float: left;
+  margin-right: 1em; }
 
 .rotate {
   /* Safari */
