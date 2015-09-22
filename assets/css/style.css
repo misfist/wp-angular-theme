@@ -6106,6 +6106,22 @@ body {
   float: left;
   margin-right: 1em; }
 
+#lightbox .modal-content {
+  display: inline-block;
+  text-align: center; }
+
+#lightbox .close {
+  opacity: 1;
+  color: white;
+  background-color: #191919;
+  padding: 5px 8px;
+  border-radius: 30px;
+  border: 2px solid white;
+  position: absolute;
+  top: -15px;
+  right: -55px;
+  z-index: 1032; }
+
 .rotate {
   /* Safari */
   -webkit-transform: rotate(-90deg);
@@ -6117,6 +6133,16 @@ body {
   -o-transform: rotate(-90deg);
   /* Internet Explorer */
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); }
+
+/*
+Original Bootstrap's CSS depends on empty href attributes to style cursors for several components (pagination, tabs etc.). But in AngularJS adding empty href attributes to link tags will cause unwanted route changes. This is why we need to remove empty href attributes from directive templates and as a result styling is not applied correctly.
+https://angular-ui.github.io/bootstrap/
+*/
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer; }
 
 form .ng-invalid.ng-dirty {
   background-color: white;

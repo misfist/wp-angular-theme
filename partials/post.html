@@ -1,7 +1,7 @@
 <article id="post-{{post.id}}" class="post" role="article">
     <header class="post-header">
         <h1 class="post-title" ng-bind-html="post.title.rendered"></h1>
-        <div class="post-image thumb"><img src="" ng-src="{{post.image.source_url}}" alt="{{post.image.title.rendered}}"></div>
+        <div class="post-image thumbnail"><img src="" ng-src="{{post.featured_image_thumbnail_full_url}}" alt="{{post.featured_image_thumbnail_title}}" class="img-responsive"></div>
     </header>
     <div class="post-content" ng-bind-html="post.content.rendered"></div>
     <footer class="post-footer meta"><span class="text-muted"></span></footer>

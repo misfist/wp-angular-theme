@@ -72,6 +72,18 @@ app.directive( 'navigation', function() {
 
 } );
 
+// app.directive( 'carousel', function() {
+
+//     return {
+
+//         restrict: 'EA',
+//         templateUrl: ngThemeViews.partials + 'carousel.html',
+
+//     }
+
+// } );
+
+
 app.directive('postsNavLink', function() {
 
     return {

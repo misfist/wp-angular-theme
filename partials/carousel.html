@@ -1,0 +1,32 @@
+<div ng-app="carousel">
+  <div class="container" ng-controller="folderCtrl"> 
+    <!-- Carousel
+        ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel"> 
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" ng-repeat="img in images" class="{active : (img === 0)}" data-slide-to="{{img}}"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div ng-class="{item: true, active : (img === 0)}" ng-repeat="img in images"> <img ng-src="{{uri}}/{{w}}/{{h}}/{{currentFolder}}/{{img}}" alt="Slide numder {{img}}">
+          <div class="container">
+            <div class="carousel-caption"> </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a> </div>
+    <!-- /.carousel --> 
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-botom" role="navigation">
+      <div class="container">
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li ng-repeat="folder in folders" class="{{activeFolder(folder)}}" ng-click="selectFolder(folder)"> <a ng-href="#{{folder}}">{{folder}}</a> </li>
+          </ul>
+        </div>
+        <!--/.nav-collapse --> 
+      </div>
+    </div>
+  </div>
+</div>

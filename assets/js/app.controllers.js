@@ -1,6 +1,6 @@
 /*jslint white: true */
 
-var app = angular.module( 'app-controllers', ['ngRoute', 'ngSanitize'] );
+var app = angular.module( 'app-controllers', ['ngRoute', 'ngSanitize', 'ui.bootstrap'] );
 
 /**
  * Controllers
@@ -8,29 +8,23 @@ var app = angular.module( 'app-controllers', ['ngRoute', 'ngSanitize'] );
 
 app.controller('MainController', ['$scope', 'WPService', function( $scope, WPService ) {
 
-    console.log( 'MainController loaded' );
+    //console.log( 'MainController loaded' );
 
     WPService.getAllCategories();
     WPService.getPosts( 1 );
     $scope.data = WPService;
-
-    //console.log( '$scope.data', $scope.data ); 
 
 }] );
 
 //Category controller
 app.controller('CategoryController', ['$scope', '$routeParams', '$http', 'WPService', function( $scope, $routeParams, $http, WPService ) {
     
-    console.log( 'CategoryController loaded' );
+    // console.log( 'CategoryController loaded' );
 
     WPService.getAllCategories();
 
-    //console.log( 'WPService.wpJsonUrl', WPService.wpJsonUrl );
-
     $http.get( WPService.wpJsonUrl + 'terms/category/' + $routeParams.category )
     .success(function( category ) {
-
-        //console.log( 'CategoryController category', category );
 
         if ( !Object.keys(category).length ) {
 
@@ -39,7 +33,6 @@ app.controller('CategoryController', ['$scope', '$routeParams', '$http', 'WPServ
 
         } else {
 
-            //console.log( 'category', category );
             $scope.current_category_id = category.id;
             WPService.getPostsInCategory( category, $routeParams.page );
         }
@@ -89,7 +82,7 @@ app.controller( 'PagedController', ['$scope', '$http', '$routeParams', 'WPServic
 // Single Page
 app.controller( 'PageController', ['$scope', '$http', '$routeParams', 'WPService', function( $scope, $http, $routeParams, WPService ) {
 
-    console.log( 'PageController is loaded.' );
+    // console.log( 'PageController is loaded.' );
 
     $http.get( WPService.wpJsonUrl + 'pages/?filter[name]=about' )
     .success( function( page ) {
@@ -103,26 +96,66 @@ app.controller( 'PageController', ['$scope', '$http', '$routeParams', 'WPService
 // Single Post
 app.controller( 'PostController', ['$scope', '$http', '$routeParams', 'WPService', function( $scope, $http, $routeParams, WPService ) {
 
-    console.log( 'PostController is loaded.' );
+    // console.log( 'PostController is loaded.' );
 
     $http.get( WPService.wpJsonUrl + 'posts/?filter[name]=' + $routeParams.slug )
     .success( function( post ) {
 
         $scope.post = post[0];
 
-        if( $scope.post.featured_image > 0 ) {
-
-            $http.get( WPService.wpJsonUrl + 'media/' + $scope.post.featured_image )
-            .success( function( image ) {
-
-                $scope.post.image = image;
-
-                //console.log('image', image);
-
-            });
-
-        }
-
     } );
 
 }] );
+
+// Carousel
+// app.controller( 'CarouselController', ['$scope', function( $scope ) {
+
+//     $scope.myInterval = 3000;
+//     $scope.slides = [
+//         {
+//             image: 'http://lorempixel.com/400/200/'
+//         },
+//         {
+//             image: 'http://lorempixel.com/400/200/food'
+//         },
+//         {
+//             image: 'http://lorempixel.com/400/200/sports'
+//         },
+//         {
+//             image: 'http://lorempixel.com/400/200/people'
+//         }
+//     ];
+
+// }] );
+
+app.controller('folderCtrl', function ($scope, $http) {
+  $scope.w = window.innerWidth;
+  $scope.h = window.innerHeight-20;
+  $scope.uri = "http://lorempixel.com";
+  $scope.folders = [
+    'abstract',
+    'animals',
+    'business',
+    'cats',
+    'city',
+    'food',
+    'night',
+    'life',
+    'fashion',
+    'people',
+    'nature',
+    'sports',
+    'technics',
+    'transport'
+  ];
+  $scope.images = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  $scope.currentFolder = $scope.folders[0];
+  $scope.selectFolder = function (folder) {
+    $scope.currentFolder = folder;
+  };
+  $scope.activeFolder = function (folder) {
+    return (folder === $scope.currentFolder) ? 'active' : '';
+  };
+});
+

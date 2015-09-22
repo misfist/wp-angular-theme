@@ -8,11 +8,17 @@ function pea_angular_theme_scripts() {
 
     wp_enqueue_style( 'theme-style', get_stylesheet_directory_uri() . '/assets/css/style.min.css' );
 
+    wp_enqueue_script( 'jquery' );
+    
+    wp_enqueue_script( 'custom-scripts', get_stylesheet_directory_uri() . '/assets/js/custom-scripts.js', '', '', true );
+
     wp_enqueue_script( 'angularjs', get_stylesheet_directory_uri() . '/assets/vendor/angular/angular.js', '', '', true );
 
     wp_enqueue_script( 'angularjs-route', get_stylesheet_directory_uri() . '/assets/vendor/angular-route/angular-route.min.js', '', '', true );
 
     wp_enqueue_script( 'angularjs-sanitize', get_stylesheet_directory_uri() . '/assets/vendor/angular-sanitize/angular-sanitize.min.js', '', '', true );
+
+    wp_enqueue_script( 'angularjs-bootstrap', get_stylesheet_directory_uri() . '/assets/vendor/angular-bootstrap/ui-bootstrap.js', '', '', true );
 
     wp_enqueue_script( 'theme-scripts', get_stylesheet_directory_uri() . '/assets/js/app.js', '', '', true );
 
@@ -21,10 +27,6 @@ function pea_angular_theme_scripts() {
     wp_enqueue_script( 'theme-directive-scripts', get_stylesheet_directory_uri() . '/assets/js/app.directives.js', '', '', true );
 
     wp_enqueue_script( 'angularjs-wpservice', get_stylesheet_directory_uri() . '/assets/js/WPService.js', '', '', true );
-
-    wp_enqueue_script( 'jquery' );
-
-    wp_enqueue_script( 'custom-scripts', get_stylesheet_directory_uri() . '/assets/js/custom-scripts.js', '', '', true );
 
     wp_localize_script( 'theme-scripts', 'ngThemeViews', 
         array(
@@ -45,8 +47,10 @@ add_action( 'wp_enqueue_scripts', 'pea_angular_theme_scripts' );
 function pea_rest_prepare_post( $data, $post, $request ) {
     $_data = $data->data;
     $thumbnail_id = get_post_thumbnail_id( $post->ID );
-    $thumbnail = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+    $thumbnail = wp_get_attachment_image_src( $thumbnail_id, 'thumbnail' );
+    $thumbnail_full = wp_get_attachment_image_src( $thumbnail_id, 'full' );
     $_data['featured_image_thumbnail_url'] = $thumbnail[0];
+    $_data['featured_image_thumbnail_full_url'] = $thumbnail_full[0];
     $_data['featured_image_thumbnail_title'] = get_the_title( $thumbnail_id );
     $_data['featured_image_thumbnail_caption'] = get_the_excerpt( $thumbnail_id );
     $data->data = $_data;

@@ -10,6 +10,8 @@ function WPService( $http ) {
         wpJsonUrl: 'wp-json/wp/v2/',
         siteName: 'WP Dev',
         posts: [],
+        images: [],
+        postsTest: [],
         categories: [],
         pageTitle: '',
         currentPage: 1,
@@ -40,7 +42,7 @@ function WPService( $http ) {
 
     WPService.getPosts = function( page ) {
 
-        console.log( 'WPService.getPosts', WPService.getPosts );
+        // console.log( 'WPService.getPosts', WPService.getPosts );
 
         return $http.get( WPService.wpJsonUrl + 'posts/?page=' + page )
         .success( function( response, status, headers ) {
@@ -68,14 +70,12 @@ function WPService( $http ) {
                 _setArchivePage( response, page, headers );
             }
 
-
-
         });
     };
 
     WPService.getAllCategories = function() {
 
-        console.log( 'WPService.getAllCategories called' );
+        // console.log( 'WPService.getAllCategories called' );
 
         //Only call WP API when categories is empty
         if( WPService.categories.length ) {
@@ -93,27 +93,29 @@ function WPService( $http ) {
 
     };
 
-    WPService.getFeaturedImage = function( id ) {
+    // No longer needed - Added featured image to data returned from API call
+    // https://1fix.io/blog/2015/06/26/adding-fields-wp-rest-api/
+    // WPService.getFeaturedImage = function( id ) {
 
-        console.log( 'WPService.getFeaturedImage', WPService.getFeaturedImage );
+    //     console.log( 'WPService.getFeaturedImage', WPService.getFeaturedImage );
 
-        //If no image id, return
-        if(! id ) {
+    //     //If no image id, return
+    //     if(! id ) {
 
-            return;
+    //         return;
 
-        }
+    //     }
 
-        $http.get( WPService.wpJsonUrl + 'media/' + id )
-        .success( function( image ) {
+    //     $http.get( WPService.wpJsonUrl + 'media/' + id )
+    //     .success( function( image ) {
 
-            console.log( image );
+    //         console.log( image );
 
-            WPService.post.imageUrl = image;
+    //         WPService.post.imageUrl = image;
 
-        } );
+    //     } );
 
-    };
+    // };
 
 
 
@@ -132,11 +134,7 @@ function WPService( $http ) {
 
     WPService.getPostsInCategory = function( category, page ) {
 
-        console.log( 'WPService.getPostsInCategory called' );
-
-        // console.log( 'category', category );
-
-        // console.log( 'page', page );
+        // console.log( 'WPService.getPostsInCategory called' );
 
         page = ( ! page ) ? 1 : parseInt( page, 10 );
         _updateTitle('Category: ' + category.name, 'Category: ' + category.name + ' - Page: ' + page );
