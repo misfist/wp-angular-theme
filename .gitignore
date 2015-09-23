@@ -1,6 +1,5 @@
 .sass-cache/*
 node_modules
-assets/vendor
 
 .log
 .DS_Store
