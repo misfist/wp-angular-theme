@@ -26,7 +26,9 @@
   ],
   "dependencies": {
     "angular": "~1.4.5",
+    "angular-animate": "~1.4.6",
     "angular-bootstrap": "~0.13.4",
+    "angular-resource": "~1.4.6",
     "angular-route": "~1.4.5",
     "angular-sanitize": "~1.4.5"
   }

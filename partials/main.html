@@ -2,8 +2,6 @@
 
     <h1 class="page-title">{{data.pageTitle}}</h1>
 
-    <carousel></carousel>
-    
     <ul class="post-list list-unstyled">
         <li class="post" ng-repeat="post in data.posts | filter:filter.s">
             <header class="post-header">
@@ -14,18 +12,15 @@
             <footer class="post-footer"><a href="{{post.slug}}" class="btn">Read More &raquo;</a></footer>
         </li>
     </ul>
-    <div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true">×</button>
-            <div class="modal-content">
-                <div class="modal-body">
-                    <img src="" alt="" />
-                </div>
-            </div>
-        </div>
-    </div>
 
     <posts-nav-link prev-label="&laquo; Previous Page" next-label="Next Page &raquo;"></posts-nav-link>
+    <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+         ng-model="currentPage" ng-change="pageChanged()"></pagination>
+      <p>
+         Total items: {{totalItems}}<br />
+         Items per page: {{itemsPerPage}}<br />
+         Current Page: {{currentPage}}
+      </p>
 </div>
 
 <aside class="col-lg-4">

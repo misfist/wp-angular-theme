@@ -1,10 +1,12 @@
-var app = angular.module( 'app', ['ngRoute', 'ngSanitize', 'app-controllers', 'app-directives'] );
+/*jslint white: true */
+
+var app = angular.module( 'app', ['ngRoute', 'ngSanitize', 'underscore', 'app-controllers', 'app-directives', 'ui.bootstrap'] );
 
 /**
  * Config
  */
 
-app.config( function( $routeProvider, $locationProvider ) {
+app.config( function( $routeProvider, $resourceProvider, $locationProvider ) {
 
     $locationProvider.html5Mode( true );
 
@@ -13,6 +15,9 @@ app.config( function( $routeProvider, $locationProvider ) {
     //     enabled: true,
     //     requireBase: false
     // });
+    
+    // Don't strip trailing slashes from calculated URLs
+    $resourceProvider.defaults.stripTrailingSlashes = false;
 
     $routeProvider
     .when( '/', {
@@ -40,11 +45,6 @@ app.config( function( $routeProvider, $locationProvider ) {
         controller: 'CategoryController',
         title: 'Category'
     } )
-    // .when( '/category/:category/page/:page', {
-    //     templateUrl: ngThemeViews.partials + 'main.html',
-    //     controller: 'Category',
-    //     title: 'Category'
-    // } )
     .when( '/wp-admin', {
         redirectTo: '/wp-admin/'
     } )

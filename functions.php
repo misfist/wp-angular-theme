@@ -7,10 +7,8 @@
 function pea_angular_theme_scripts() {
 
     wp_enqueue_style( 'theme-style', get_stylesheet_directory_uri() . '/assets/css/style.min.css' );
-
-    wp_enqueue_script( 'jquery' );
     
-    wp_enqueue_script( 'custom-scripts', get_stylesheet_directory_uri() . '/assets/js/custom-scripts.js', '', '', true );
+    wp_enqueue_script( 'custom-scripts', get_stylesheet_directory_uri() . '/assets/js/custom-scripts.js', array( 'jquery' ), '', true );
 
     wp_enqueue_script( 'angularjs', get_stylesheet_directory_uri() . '/assets/vendor/angular/angular.js', '', '', true );
 
@@ -18,7 +16,13 @@ function pea_angular_theme_scripts() {
 
     wp_enqueue_script( 'angularjs-sanitize', get_stylesheet_directory_uri() . '/assets/vendor/angular-sanitize/angular-sanitize.min.js', '', '', true );
 
-    wp_enqueue_script( 'angularjs-bootstrap', get_stylesheet_directory_uri() . '/assets/vendor/angular-bootstrap/ui-bootstrap.js', '', '', true );
+    wp_enqueue_script( 'angularjs-resource', get_stylesheet_directory_uri() . '/assets/vendor/angular-resource/angular-resource.min.js', '', '', true );
+
+    wp_enqueue_script( 'angularjs-underscore', get_stylesheet_directory_uri() . '/assets/vendor/angular-underscore-module/angular-underscore-module.js', array( 'underscore' ), '', true );
+
+    // wp_enqueue_script( 'angularjs-animate', get_stylesheet_directory_uri() . '/assets/vendor/angular-animate/angular-animate.min.js', '', '', true );
+
+    wp_enqueue_script( 'angularjs-ui', get_stylesheet_directory_uri() . '/assets/vendor/angular-bootstrap/ui-bootstrap-custom-tpls.min.js', '', '', true );
 
     wp_enqueue_script( 'theme-scripts', get_stylesheet_directory_uri() . '/assets/js/app.js', '', '', true );
 
@@ -57,6 +61,34 @@ function pea_rest_prepare_post( $data, $post, $request ) {
     return $data;
 }
 add_filter( 'rest_prepare_post', 'pea_rest_prepare_post', 10, 3 );
+
+/**
+ * Allow meta_query in Rest API
+ * http://wordpress.stackexchange.com/questions/169408/wp-json-rest-api-ryan-mccue-how-to-query-posts-with-specific-meta-data-with-a
+ * http://codex.wordpress.org/Class_Reference/WP_Query#Custom_Field_Parameters
+ * wp-json/wp/v2/posts?filter[meta_query][key]=_thumbnail_id&filter[meta_query][compare]=EXISTS
+ */
+function pea_rest_add_meta_query( $data ){
+    $args = array();
+    $args['relation'] = 'AND';
+
+    foreach ( $data as $key=>$value ) {
+        if ( 'relation' === $key ) {
+            $args['relation'] = $data['relation'];
+        }
+        if ( substr($key, 0, 3) === 'key' ) {
+            $arg_num = substr($key, 3);
+            $args[(int)$arg_num]['key'] = $value;
+        }
+        if ( substr($key, 0, 7) === 'compare' ) {
+            $arg_num_comp = substr($key, 7);
+            $args[(int)$arg_num_comp]['compare'] = $value;
+        }
+    }
+    return $args;
+}
+
+add_filter('json_query_var-meta_query', 'pea_rest_add_meta_query', 10, 1);
 
 /**
  * Body Class - add slug and admin-bar to body class

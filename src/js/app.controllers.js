@@ -1,18 +1,23 @@
 /*jslint white: true */
 
-var app = angular.module( 'app-controllers', ['ngRoute', 'ngSanitize', 'ui.bootstrap'] );
+var app = angular.module( 'app-controllers', ['ngResource', 'ngRoute', 'ngSanitize'] );
 
 /**
  * Controllers
  */
 
-app.controller('MainController', ['$scope', 'WPService', function( $scope, WPService ) {
+app.controller('MainController', ['$scope', '$resource', 'WPService', function( $scope, $resource, WPService ) {
 
-    //console.log( 'MainController loaded' );
+    console.log( 'MainController loaded' );
 
     WPService.getAllCategories();
     WPService.getPosts( 1 );
     $scope.data = WPService;
+
+    //$scope.data = WPService.PostService.query()
+
+    console.log( '$scope.data', $scope.data );
+
 
 }] );
 
@@ -108,54 +113,41 @@ app.controller( 'PostController', ['$scope', '$http', '$routeParams', 'WPService
 }] );
 
 // Carousel
-// app.controller( 'CarouselController', ['$scope', function( $scope ) {
+// app.controller( 'CarouselController', ['$scope', 'WPService', function( $scope, WPService ) {
 
-//     $scope.myInterval = 3000;
+//     console.log( 'CarouselController is loaded.' );
+
 //     $scope.slides = [
 //         {
-//             image: 'http://lorempixel.com/400/200/'
+//           image: 'http://lorempixel.com/400/200/'
 //         },
 //         {
-//             image: 'http://lorempixel.com/400/200/food'
+//           image: 'http://lorempixel.com/400/200/food'
 //         },
 //         {
-//             image: 'http://lorempixel.com/400/200/sports'
+//           image: 'http://lorempixel.com/400/200/sports'
 //         },
 //         {
-//             image: 'http://lorempixel.com/400/200/people'
+//           image: 'http://lorempixel.com/400/200/people'
 //         }
-//     ];
+//       ];
+
+//     // WPService.getImageCollection();
+
+//     // $scope.images = WPService.images;
+
+//     console.log( 'CarouselController WPService', WPService );
 
 // }] );
 
-app.controller('folderCtrl', function ($scope, $http) {
-  $scope.w = window.innerWidth;
-  $scope.h = window.innerHeight-20;
-  $scope.uri = "http://lorempixel.com";
-  $scope.folders = [
-    'abstract',
-    'animals',
-    'business',
-    'cats',
-    'city',
-    'food',
-    'night',
-    'life',
-    'fashion',
-    'people',
-    'nature',
-    'sports',
-    'technics',
-    'transport'
-  ];
-  $scope.images = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+app.controller( 'CarouselCtrl', [ '$scope', 'WPService', function( $scope, WPService ) {
+ 
+    console.log( 'CarouselCtrl called' );
 
-  $scope.currentFolder = $scope.folders[0];
-  $scope.selectFolder = function (folder) {
-    $scope.currentFolder = folder;
-  };
-  $scope.activeFolder = function (folder) {
-    return (folder === $scope.currentFolder) ? 'active' : '';
-  };
-});
+    WPService.getImageCollection();
+
+    $scope.carouselInterval = 3000;
+    $scope.slides = WPService.images;
+
+} ] );
 

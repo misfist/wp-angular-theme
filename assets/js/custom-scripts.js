@@ -1,6 +1,6 @@
 /*jslint white: true */
 
-jQuery( document ).ready( function( $ ) {
+(function($) {
 
     console.log( 'custom-script.js loaded' );
 
@@ -46,4 +46,4 @@ jQuery( document ).ready( function( $ ) {
     //     $lightbox.find( '.close' ).removeClass( 'hidden' );
     // });
 
-});
+})(jQuery);

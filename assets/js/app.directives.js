@@ -72,16 +72,16 @@ app.directive( 'navigation', function() {
 
 } );
 
-// app.directive( 'carousel', function() {
+app.directive( 'slider', function() {
 
-//     return {
+    return {
 
-//         restrict: 'EA',
-//         templateUrl: ngThemeViews.partials + 'carousel.html',
+        restrict: 'EA',
+        templateUrl: ngThemeViews.partials + 'slider.html',
 
-//     }
+    }
 
-// } );
+} );
 
 
 app.directive('postsNavLink', function() {

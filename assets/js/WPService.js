@@ -1,6 +1,6 @@
 /*jslint white: true */
 
-function WPService( $http ) {
+function WPService( $http, $resource ) {
 
     /**
      * Global variables
@@ -11,9 +11,9 @@ function WPService( $http ) {
         siteName: 'WP Dev',
         posts: [],
         images: [],
-        postsTest: [],
         categories: [],
         pageTitle: '',
+        totalItems: '',
         currentPage: 1,
         totalPages: 1
     };
@@ -40,6 +40,12 @@ function WPService( $http ) {
      * Get Data
      */
 
+    // WPService.factory( 'PostService', function ( $resource ) {
+
+    //     return $resource( WPService.wpJsonUrl + 'posts/?page=' + page );
+
+    // } );
+
     WPService.getPosts = function( page ) {
 
         // console.log( 'WPService.getPosts', WPService.getPosts );
@@ -47,7 +53,7 @@ function WPService( $http ) {
         return $http.get( WPService.wpJsonUrl + 'posts/?page=' + page )
         .success( function( response, status, headers ) {
 
-            console.log( 'response', response );
+            //console.log( 'response', response );
             
             page = parseInt( page, 10 );
 
@@ -70,8 +76,45 @@ function WPService( $http ) {
                 _setArchivePage( response, page, headers );
             }
 
-        });
+        })
+        .error( function( images ) {
+            console.error( 'Couldn\'t get posts in WPService.getPosts' );
+        } );
     };
+
+
+
+    WPService.getImageCollection = function() {
+
+        console.log( 'WPService.getImageCollection called' );
+
+        $http.get( WPService.wpJsonUrl + 'posts' )
+        .success( function( images ) {
+
+            //console.log('images', images);
+
+            _.each( images, function ( image, i ) {
+
+                //console.log( 'i', i, 'image', image );
+
+                if( image.featured_image_thumbnail_full_url ) {
+
+                    WPService.images.push( {'url':image.featured_image_thumbnail_full_url, 'title':image.featured_image_thumbnail_title} );
+
+                }
+
+            } );   
+
+            //console.log( 'WPService.images', WPService.images );
+
+        } )
+        .error( function( images ) {
+            console.error( 'Couldn\'t get images in WPService.getImageCollection' );
+        } );
+
+    };
+
+
 
     WPService.getAllCategories = function() {
 
@@ -89,6 +132,9 @@ function WPService( $http ) {
 
             WPService.categories = categories;
 
+        } )
+        .error( function( images ) {
+            console.error( 'Couldn\'t get categories in WPService.getAllCategories' );
         } );
 
     };
@@ -121,14 +167,19 @@ function WPService( $http ) {
 
     WPService.getSearchResults = function( s ) {
 
-    return $http.get( WPService.wpJsonUrl + 'posts/?filter[s]=' + s + '&filter[posts_per_page]=-1' )
-    .success(function( result, status, headers ) {
-    
-        _updateTitle('Search Results for ' + s, 'Search Results:');
+        // console.log( 'WPService.getSearchResults called' );
 
-        _setArchivePage( result, 1, headers );
+        return $http.get( WPService.wpJsonUrl + 'posts/?filter[s]=' + s + '&filter[posts_per_page]=-1' )
+        .success( function( result, status, headers ) {
+        
+            _updateTitle('Search Results for ' + s, 'Search Results:');
 
-        });
+            _setArchivePage( result, 1, headers );
+
+        })
+        .error( function( result ) {
+            console.error( 'Couldn\'t get results in WPService.getSearchResults' );
+        } );
     };
 
 
@@ -146,9 +197,15 @@ function WPService( $http ) {
 
         // console.log( 'request', request );
 
-        return $http.get( request ).success(function( res, status, headers ){
-          _setArchivePage( res, page, headers );
-        });
+        return $http.get( request )
+        .success( function( response, status, headers ) {
+
+          _setArchivePage( response, page, headers );
+
+        })
+        .error( function( response ) {
+            console.error( 'Couldn\'t get response in WPService.getPostsInCategory' );
+        } );
     };
 
     return WPService;
